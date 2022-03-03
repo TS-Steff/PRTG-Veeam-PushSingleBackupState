@@ -34,21 +34,20 @@ if(-not $job){
 ### Job exists get last session and info ###
 $lastSession = $job.FindLastSession()
 
+<#
+write-host $job.Name
+write-host "**LAST SESSION**"
+write-host "lastSession is Completed: " $lastSession.IsCompleted
+write-host "Job Name: " $lastSession.Name
+write-host "Start: " $lastSession.CreationTime
+write-host "End: " $lastSession.EndTime
+write-host "Duration: " $lastSession.Progress.Duration
+write-host "Result: " $lastSession.Result
+#>
 
-#write-host $job.Name
-#write-host "**LAST SESSION**"
 $jobCompleted = $lastSession.IsCompleted
-#write-host "lastSession is Completed: " $lastSession.IsCompleted
-#write-host "Job Name: " $lastSession.Name
-
-#write-host "Start: " $lastSession.CreationTime
-#write-host "End: " $lastSession.EndTime
-
 $jobDuration = $lastSession.Progress.Duration.TotalSeconds
-#write-host "Duration: " $lastSession.Progress.Duration
-
 $jobResult = $lastSession.Result
-#write-host "Result: " $lastSession.Result
 
 switch($jobResult){
     "Success" { $jobResultCode = 0 } # OK
@@ -62,6 +61,7 @@ switch($jobResult){
 $prtgresult = @"
 <?xml version="1.0" encoding="UTF-8" ?>
 <prtg>
+
 "@
 
 
@@ -81,7 +81,7 @@ $prtgresult += @"
     <value>$jobCompleted</value>
     <showChart>1</showChart>
     <showTable>1</showTable>
-  </result
+  </result>
   <result>
     <channel>Duration</channel>
     <unit>TimeSeconds</unit>
@@ -94,15 +94,11 @@ $prtgresult += @"
 
 ### PRTG XML Footer ###
 $prtgresult += @"
+
 </prtg>
 "@
 
-
-write-host $prtgresult
-
-
-
-
+#write-host $prtgresult
 
 function sendPush(){
     Add-Type -AssemblyName system.web
