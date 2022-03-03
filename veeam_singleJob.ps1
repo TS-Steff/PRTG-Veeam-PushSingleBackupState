@@ -1,14 +1,25 @@
 ﻿<#
-.NOTES
-┌─────────────────────────────────────────────────────────────────────────────────────────────┐ 
-│ ORIGIN STORY                                                                                │ 
-├─────────────────────────────────────────────────────────────────────────────────────────────┤ 
-│   DATE        : 2022.03.02                                                                  |
-│   AUTHOR      : TS-Management GmbH, Stefan Müller                                           | 
-│   DESCRIPTION : PRTG Push Veeam Backup State                                                |
-└─────────────────────────────────────────────────────────────────────────────────────────────┘
 
-"SRV-01 - Daten to Cloud"
+    .SYNOPSIS
+    PRTG push Veeam Single Job Status
+    
+    .DESCRIPTION
+    Advanced Sensor will report Result of last job
+    
+    .EXAMPLE
+    veeam_singleJob.ps1 -JobName "Data to Cloud Repository"
+    
+    .NOTES
+    ┌─────────────────────────────────────────────────────────────────────────────────────────────┐ 
+    │ ORIGIN STORY                                                                                │ 
+    ├─────────────────────────────────────────────────────────────────────────────────────────────┤ 
+    │   DATE        : 2022.03.02                                                                  |
+    │   AUTHOR      : TS-Management GmbH, Stefan Müller                                           | 
+    │   DESCRIPTION : PRTG Push Veeam Backup State                                                |
+    └─────────────────────────────────────────────────────────────────────────────────────────────┘
+
+    .Link
+    https://ts-man.ch
 #>
 [cmdletbinding()]
 param(
