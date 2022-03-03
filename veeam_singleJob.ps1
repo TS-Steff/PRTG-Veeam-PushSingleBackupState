@@ -8,6 +8,9 @@
     
     .EXAMPLE
     veeam_singleJob.ps1 -JobName "Data to Cloud Repository"
+
+    .EXAMPLE
+    veeam_singleJob.ps1 -JobName "Data to Cloud Repository" -DryRun
     
     .NOTES
     ┌─────────────────────────────────────────────────────────────────────────────────────────────┐ 
@@ -20,15 +23,21 @@
 
     .Link
     https://ts-man.ch
+
+
+    SRV-01 - Daten to Cloud
 #>
 [cmdletbinding()]
 param(
     [Parameter(Position=0, Mandatory=$true)]
-        [string] $JobName = "asdf"
+        [string]$JobName = "asdf",
+	[Parameter(Position=1, Mandatory=$false)]
+		[switch]$DryRun = $false
 )
 
+
 ##### COFNIG START #####
-$probeIP = "PROBE"
+$probeIP = "PRTG HOST"
 $sensorPort = "PORT"
 $sensorKey ="KEY"
 #####  CONFIG END  #####
@@ -45,18 +54,22 @@ if(-not $job){
 ### Job exists get last session and info ###
 $lastSession = $job.FindLastSession()
 
-<#
-write-host $job.Name
-write-host "**LAST SESSION**"
-write-host "lastSession is Completed: " $lastSession.IsCompleted
-write-host "Job Name: " $lastSession.Name
-write-host "Start: " $lastSession.CreationTime
-write-host "End: " $lastSession.EndTime
-write-host "Duration: " $lastSession.Progress.Duration
-write-host "Result: " $lastSession.Result
-#>
+if($DryRun){
+    write-host $job.Name
+    write-host "**LAST SESSION**"
+    write-host "lastSession is Completed: " $lastSession.IsCompleted
+    write-host "Job Name: " $lastSession.Name
+    write-host "Start: " $lastSession.CreationTime
+    write-host "End: " $lastSession.EndTime
+    write-host "Duration: " $lastSession.Progress.Duration
+    write-host "Result: " $lastSession.Result
+    write-host ""
+}
+
+
 
 $jobCompleted = $lastSession.IsCompleted
+$jobLastStart = $lastSession.CreationTime.DateTime
 $jobDuration = $lastSession.Progress.Duration.TotalSeconds
 $jobResult = $lastSession.Result
 
@@ -78,7 +91,7 @@ $prtgresult = @"
 
 ### PRTG RESULT XML###
 $prtgresult += @"
-  <text>$JobName</text>
+  <text>$JobName | $jobLastStart</text>
   <result>
     <channel>Result</channel>
     <unit>Custom</unit>
@@ -137,4 +150,8 @@ function sendPush(){
     }
 }
 
-sendPush
+if($DryRun){
+    write-host $prtgresult
+}else{
+    sendPush
+}
