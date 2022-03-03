@@ -35,20 +35,20 @@ if(-not $job){
 $lastSession = $job.FindLastSession()
 
 
-write-host $job.Name
-write-host "**LAST SESSION**"
+#write-host $job.Name
+#write-host "**LAST SESSION**"
 $jobCompleted = $lastSession.IsCompleted
-write-host "lastSession is Completed: " $lastSession.IsCompleted
-write-host "Job Name: " $lastSession.Name
+#write-host "lastSession is Completed: " $lastSession.IsCompleted
+#write-host "Job Name: " $lastSession.Name
 
-write-host "Start: " $lastSession.CreationTime
-write-host "End: " $lastSession.EndTime
+#write-host "Start: " $lastSession.CreationTime
+#write-host "End: " $lastSession.EndTime
 
 $jobDuration = $lastSession.Progress.Duration.TotalSeconds
-write-host "Duration: " $lastSession.Progress.Duration
+#write-host "Duration: " $lastSession.Progress.Duration
 
 $jobResult = $lastSession.Result
-write-host "Result: " $lastSession.Result
+#write-host "Result: " $lastSession.Result
 
 switch($jobResult){
     "Success" { $jobResultCode = 0 } # OK
