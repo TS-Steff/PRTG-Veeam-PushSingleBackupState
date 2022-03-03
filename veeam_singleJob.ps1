@@ -23,9 +23,6 @@
 
     .Link
     https://ts-man.ch
-
-
-    SRV-01 - Daten to Cloud
 #>
 [cmdletbinding()]
 param(
