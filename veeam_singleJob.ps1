@@ -85,6 +85,13 @@ switch($jobResult){
     Default   { $jobResultcode = 9 } # Unknown
 }
 
+if($jobResultCode -eq 9){
+    if($job.GetLastState() -eq "Working"){
+        $jobResultCode = 8
+    }elseif($job.GetLastState() -eq "Stopping"){
+        $jobResultCode = 7
+    }
+}
 
 ### PRTG XML Header ###
 $prtgresult = @"
