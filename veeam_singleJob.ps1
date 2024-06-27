@@ -26,10 +26,10 @@
 #>
 [cmdletbinding()]
 param(
-    [Parameter(Position=0, Mandatory=$true)]
-        [string]$JobName = "asdf",
+    [Parameter(Position=0, Mandatory=$true)] # true
+        [string]$JobName = "jobName",
 	[Parameter(Position=1, Mandatory=$false)]
-		[switch]$DryRun = $false
+		[switch]$DryRun = $false               # false
 )
 
 
@@ -84,11 +84,14 @@ if($DryRun){
 }
 
 
-
 $jobCompleted = $lastSession.IsCompleted
 $jobLastStart = $lastSession.CreationTime.DateTime
 $jobDuration = $lastSession.Progress.Duration.TotalSeconds
 $jobResult = $lastSession.Result
+
+$date_diff = New-TimeSpan -Start $lastSession.EndTime -End $timeNow
+$jobHoursSinceLastRun = $date_diff.TotalHours
+
 
 switch($jobResult){
     "Success" { $jobResultCode = 0 } # OK
@@ -140,6 +143,13 @@ $prtgresult += @"
     <showChart>1</showChart>
     <showTable>1</showTable>
   </result>
+    <result>
+        <channel>Hours since last run</channel>
+        <unit>TimeHours</unit>
+        <value>$([int]($jobHoursSinceLastRun))</value>
+        <showChart>1</showChart>
+        <showTable>1</showTable>
+    </result>
 "@
 
 
