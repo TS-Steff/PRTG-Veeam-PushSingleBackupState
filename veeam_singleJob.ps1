@@ -28,15 +28,21 @@
 param(
     [Parameter(Position=0, Mandatory=$true)] # true
         [string]$JobName = "jobName",
-	[Parameter(Position=1, Mandatory=$false)]
+    [Parameter(Position=1, Mandatory=$true)]
+        [string]$probeIP,
+    [Parameter(Position=2, Mandatory=$true)]
+        [string]$sensorPort,
+    [Parameter(Position=3, Mandatory=$true)]
+        [string]$sensorKey,
+	[Parameter(Position=4, Mandatory=$false)]
 		[switch]$DryRun = $false               # false
 )
 
 
 ##### COFNIG START #####
-$probeIP = "PRTG HOST"  #include https or http
-$sensorPort = "PORT"
-$sensorKey ="KEY"
+#$probeIP = "PRTG HOST"  #include https or http
+#$sensorPort = "PORT"
+#$sensorKey ="KEY"
 #####  CONFIG END  #####
 
 #Make sure PSModulePath includes Veeam Console
