@@ -89,6 +89,7 @@ $jobLastStart = $lastSession.CreationTime.DateTime
 $jobDuration = $lastSession.Progress.Duration.TotalSeconds
 $jobResult = $lastSession.Result
 
+$timeNow = Get-Date
 $date_diff = New-TimeSpan -Start $lastSession.EndTime -End $timeNow
 $jobHoursSinceLastRun = $date_diff.TotalHours
 
