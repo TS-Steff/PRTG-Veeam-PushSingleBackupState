@@ -143,13 +143,13 @@ $prtgresult += @"
     <showChart>1</showChart>
     <showTable>1</showTable>
   </result>
-    <result>
-        <channel>Hours since last run</channel>
-        <unit>TimeHours</unit>
-        <value>$([int]($jobHoursSinceLastRun))</value>
-        <showChart>1</showChart>
-        <showTable>1</showTable>
-    </result>
+  <result>
+    <channel>Hours since last run</channel>
+    <unit>TimeHours</unit>
+    <value>$([int]($jobHoursSinceLastRun))</value>
+    <showChart>1</showChart>
+    <showTable>1</showTable>
+  </result>
 "@
 
 
